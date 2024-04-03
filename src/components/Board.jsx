@@ -3,9 +3,9 @@ import "./stylesheets/Board.css"
 import Square from './Square'
 
 
-const Board = () => {
-    const [squares, setSquares] = useState(Array(9).fill(null))
-    const [xIsNext, setXIsNext] = useState(true)
+const Board = ({ xIsNext, squares, onPlay }) => {
+    // const [squares, setSquares] = useState(Array(9).fill(null)) -- now coming from parent
+
 
     function handleClick(i) {
         if (squares[i] || calculateWinner(squares)) return
@@ -18,8 +18,9 @@ const Board = () => {
         else {
             newSquares[i] = "O"
         }
-        setSquares(newSquares)
-        setXIsNext(!xIsNext)
+        // setSquares(newSquares)
+        // setXIsNext(!xIsNext)
+        onPlay(newSquares)
     }
 
     function calculateWinner(squares) {
@@ -54,7 +55,7 @@ const Board = () => {
 
     return (
         <>
-            <h1>{status}</h1>
+            <h1 className='status'>{status}</h1>
             <div className='board-row'>
                 <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
                 <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
